@@ -1,0 +1,7 @@
+---
+
+services:
+  samba:
+    image: dperson/samba:rpi
+    restart: always
+    command: 
