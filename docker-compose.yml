@@ -1,7 +1,26 @@
 ---
+version: '3.4'
 
 services:
   samba:
-    image: dperson/samba:rpi
+    container_name: samba
+    image: dperson/samba:latest
     restart: always
-    command: 
+    stdin_open: true
+    
+    networks:
+      - default
+
+    ports:
+      - "137:137/udp"
+      - "138:138/udp"
+      - "139:139/tcp"
+      - "445:445/tcp"
+    tty: true
+    volumes:
+      - /root/shared/Compartida1:/Compartida1:rw
+      - /root/shared/Compartida2:/Compartida2:rw
+      - /root/shared/Compartida3:/Compartida3:rw
+      - /usr/share/zoneinfo/America/Bogota:/etc/localtime
+
+    command: '-s "Compartida1;/Compartida1;yes;no" -s "Compartida2;/Compartida2;yes;no" -s "Compartida3;/Compartida3;yes;no" -u "john;pepe123" -p'
